@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Created-By: IntelliJ IDEA
+Built-By: rakib
+Build-Jdk: 17.0.10
+Implementation-Title: todo-with-spring-boot
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: com.dsi
+Main-Class: ${start-class}
+
