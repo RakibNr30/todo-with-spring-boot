@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      th:fragment="layout(content, title, menu)">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+
+    <link rel="stylesheet" th:href="@{/front/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/front/css/style.css}">
+</head>
+<body>
+
+<th:block th:replace="/fragments/front :: nav(menu = ${menu})"></th:block>
+
+<div class="container">
+    <th:block th:replace="${content}"></th:block>
+</div>
+
+</body>
+</html>

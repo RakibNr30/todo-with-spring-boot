@@ -1,0 +1,38 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20240408_000000_create_table_todos
+      author: Abdur Rakib
+      changes:
+        - createTable:
+            tableName: todos
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: todos_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+              - column:
+                  name: details
+                  type: VARCHAR(65535)
+              - column:
+                  name: is_completed
+                  type: BOOLEAN
+              - column:
+                  name: is_starred
+                  type: BOOLEAN
+              - column:
+                  name: created_at
+                  type: TIMESTAMP WITHOUT TIME ZONE
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP WITHOUT TIME ZONE
+        - addAutoIncrement:
+              tableName: todos
+              columnName: id
+              generationType: IDENTITY
+
