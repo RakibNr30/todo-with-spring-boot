@@ -7,12 +7,14 @@ import com.dsi.todowithspringboot.helper.NotifierHelper;
 import com.dsi.todowithspringboot.helper.ValidationHelper;
 import com.dsi.todowithspringboot.service.TodoService;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+@Slf4j
 @Controller
 @RequestMapping("/todo")
 public class TodoController {
@@ -49,7 +51,7 @@ public class TodoController {
             this.todoService.save(todo);
             new NotifierHelper(attributes).message("Todo added successfully.").success();
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            log.error(e.getMessage());
             new NotifierHelper(attributes).message("Todo could't be added.").error();
         }
 
@@ -97,7 +99,7 @@ public class TodoController {
             this.todoService.update(todo);
             new NotifierHelper(attributes).message("Todo updated successfully.").success();
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            log.error(e.getMessage());
             new NotifierHelper(attributes).message("Todo can't be updated.").error();
         }
 
@@ -118,7 +120,7 @@ public class TodoController {
             this.todoService.delete(todo.getId());
             new NotifierHelper(attributes).message("Todo deleted successfully.").success();
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            log.error(e.getMessage());
             new NotifierHelper(attributes).message("Todo can't be deleted.").error();
         }
 
