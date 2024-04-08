@@ -1,0 +1,8 @@
+<th:block th:if="${ not #strings.isEmpty(notifierStatus) }">
+    <div class="card text-white mb-2 mt-2" th:classappend="${notifierBg}">
+        <div class="card-body">
+            <span class="font-weight-bold" th:text="${notifierTitle}"></span>
+            <div class="text-white" th:text="${notifierMessage}"></div>
+        </div>
+    </div>
+</th:block>

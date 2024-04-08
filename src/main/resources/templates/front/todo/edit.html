@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      th:replace="layouts/front :: layout(content = ~{::section}, title = 'Todo Edit', menu = 'todo')">
+<body>
+<section>
+    <th:block th:replace="/fragments/notifier" />
+    <div class="todo-area">
+        <form th:action="@{/todo/{id}/update(id=${todo.id})}" th:object="${todo}" method="POST">
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <label class="mb-1" for="title">Title</label>
+                    <input id="title" th:field="*{title}" class="form-control" th:classappend="${#fields.hasErrors('title') ? 'is-invalid' : ''}" type="text" placeholder="Enter title">
+                    <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+                </div>
+                <div class="col-12 mb-3">
+                    <label class="mb-1" for="details">Details</label>
+                    <textarea id="details" th:field="*{details}" class="form-control" th:classappend="${#fields.hasErrors('details') ? 'is-invalid' : ''}" placeholder="Enter details" rows="4"></textarea>
+                    <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('details')}" th:errors="*{details}"></div>
+                </div>
+                <div class="col-12 mb-3">
+                    <div class="form-check form-check-inline">
+                        <input id="is_completed" th:field="*{isCompleted}" class="form-check-input" type="checkbox" th:value="true">
+                        <label for="is_completed" class="form-check-label">Mark as Completed</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input id="is_starred" th:field="*{isStarred}" class="form-check-input" type="checkbox" th:value="true">
+                        <label for="is_starred" class="form-check-label">Mark as Starred</label>
+                    </div>
+                </div>
+                <div class="col-12 mb-3">
+                    <button class="btn btn-primary float-end">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+</body>
+</html>

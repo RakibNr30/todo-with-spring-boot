@@ -6,5 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TodoRepository extends JpaRepository<Todo, Long> {
+    public Long countByIsCompleted(Boolean isCompleted);
 
+    public Long countByIsStarred(Boolean isStarred);
 }

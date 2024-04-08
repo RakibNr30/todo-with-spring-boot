@@ -18,7 +18,9 @@ public class HomeController {
 
     @GetMapping
     public String index(Model model) {
-        model.addAttribute("todos", todoService.findAll());
+        model.addAttribute("totalTodo", todoService.count());
+        model.addAttribute("completedTodo", todoService.countByIsCompleted(true));
+        model.addAttribute("starredTodo", todoService.countByIsStarred(true));
 
         return "front/index";
     }

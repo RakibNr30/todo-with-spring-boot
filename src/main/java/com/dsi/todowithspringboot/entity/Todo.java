@@ -1,6 +1,7 @@
 package com.dsi.todowithspringboot.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -20,6 +21,7 @@ public class Todo {
     private Long id;
 
     @Length(min=3, max = 255)
+    @NotBlank
     private String title;
 
     @Length(max = 65535)

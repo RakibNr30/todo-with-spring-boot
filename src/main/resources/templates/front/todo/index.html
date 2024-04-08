@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      th:replace="layouts/front :: layout(content = ~{::section}, title = 'Todo List', menu = 'todo')">
+<body>
+<section>
+    <th:block th:replace="/fragments/notifier" />
+    <div class="todo-area">
+        <th:block th:if="${todos.size() > 0}">
+            <div class="row">
+                <div class="col-md-4 mb-3" th:each="todo : ${todos}">
+                        <div class="card todo-card">
+                            <div class="card-header">
+                                <form th:action="@{/todo/{id}/destroy(id=${todo.id})}" th:method="POST">
+                                    <button class="btn btn-danger btn-sm text-light float-end">X</button>
+                                </form>
+                            </div>
+                            <a class="todo-link" th:href="@{/todo/{id}/edit(id=${todo.id})}">
+                                <div class="card-body">
+                                    <h5 th:text="${todo.title}"></h5>
+                                    <span th:text="${todo.isCompleted ? 'Completed' : 'In Progress'}" th:class="${todo.isCompleted ? 'text-primary' : 'text-secondary'}"></span> <span class="text-dark">|</span>
+                                    <span th:text="${todo.isStarred ? 'Starred' : 'Not Starred'}" th:class="${todo.isStarred ? 'text-success' : 'text-secondary'}"></span>
+                                </div>
+                            </a>
+                        </div>
+                </div>
+            </div>
+        </th:block>
+
+        <form th:action="@{/todo/store}" th:object="${todo}" method="POST">
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <div class="input-group">
+                        <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+                        <input id="title" th:field="*{title}" class="form-control" th:classappend="${#fields.hasErrors('title') ? 'is-invalid' : ''}" type="text" placeholder="Enter todo">
+                        <button class="btn btn-primary">Add New</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+</body>
+</html>
