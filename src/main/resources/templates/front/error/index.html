@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      th:replace="layouts/front :: layout(content = ~{::section}, title = 'Error', menu = '')">
+<body>
+
+<section>
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title float-start" th:text="${status}"></h5>
+        </div>
+        <div class="card-body">
+            <h2 th:text="${message}"></h2>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>
