@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title th:text="${title}"></title>
 
-    <link rel="stylesheet" th:href="@{/front/vendor/fontawesome/css/all.min.css}"  type="text/css">
+    <link rel="stylesheet" th:href="@{/front/vendor/fontawesome/css/all.min.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/front/vendor/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/front/css/style.css}">
 </head>
@@ -17,5 +17,7 @@
     <th:block th:replace="${content}"></th:block>
 </div>
 
+<script th:src="@{/front/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/front/js/main.js}"></script>
 </body>
 </html>

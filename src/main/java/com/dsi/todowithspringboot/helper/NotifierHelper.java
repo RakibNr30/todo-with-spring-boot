@@ -19,18 +19,21 @@ public final class NotifierHelper {
     public void success() {
         this.attributes.addFlashAttribute("notifierStatus", "success");
         this.attributes.addFlashAttribute("notifierBg", "bg-success");
+        this.attributes.addFlashAttribute("notifierIcon", "fas fa-check-circle");
         this.attributes.addFlashAttribute("notifierTitle", "Success!");
     }
 
     public void warning() {
         this.attributes.addFlashAttribute("notifierStatus", "warning");
         this.attributes.addFlashAttribute("notifierBg", "bg-warning");
+        this.attributes.addFlashAttribute("notifierIcon", "fas fa-exclamation-triangle");
         this.attributes.addFlashAttribute("notifierTitle", "Warning!");
     }
 
     public void error() {
         this.attributes.addFlashAttribute("notifierStatus", "error");
         this.attributes.addFlashAttribute("notifierBg", "bg-danger");
+        this.attributes.addFlashAttribute("notifierIcon", "fas fa-times-circle");
         this.attributes.addFlashAttribute("notifierTitle", "Error!");
     }
 }

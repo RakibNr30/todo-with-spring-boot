@@ -14,7 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -140,6 +139,48 @@ public class TodoController {
         } catch (Exception e) {
             log.error(e.getMessage());
             new NotifierHelper(attributes).message("Todo can't be deleted.").error();
+        }
+
+        return "redirect:/todo";
+    }
+
+    @PostMapping("/{id}/toggle-completed")
+    public String toggleCompleted(@PathVariable Long id, RedirectAttributes attributes) {
+
+        Todo todo = this.todoService.findById(id);
+
+        if (todo == null) {
+            new NotifierHelper(attributes).message("Todo not found.").error();
+            return "redirect:/todo";
+        }
+
+        try {
+            todo.setIsCompleted(!todo.getIsCompleted());
+            this.todoService.update(todo);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            new NotifierHelper(attributes).message("Todo can't be updated.").error();
+        }
+
+        return "redirect:/todo";
+    }
+
+    @PostMapping("/{id}/toggle-starred")
+    public String toggleStarred(@PathVariable Long id, RedirectAttributes attributes) {
+
+        Todo todo = this.todoService.findById(id);
+
+        if (todo == null) {
+            new NotifierHelper(attributes).message("Todo not found.").error();
+            return "redirect:/todo";
+        }
+
+        try {
+            todo.setIsStarred(!todo.getIsStarred());
+            this.todoService.update(todo);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            new NotifierHelper(attributes).message("Todo can't be updated.").error();
         }
 
         return "redirect:/todo";

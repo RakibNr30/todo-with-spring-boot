@@ -18,7 +18,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({ Exception.class })
     public String exception(Model model, Exception e) {
-        model.addAttribute("status", HttpStatus.BAD_REQUEST);
+        model.addAttribute("status", HttpStatus.INTERNAL_SERVER_ERROR);
         model.addAttribute("message", e.getMessage());
         return "front/error/index";
     }
