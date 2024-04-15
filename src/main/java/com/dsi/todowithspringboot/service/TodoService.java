@@ -2,8 +2,8 @@ package com.dsi.todowithspringboot.service;
 
 import com.dsi.todowithspringboot.entity.Todo;
 import com.dsi.todowithspringboot.repository.TodoRepository;
+import com.dsi.todowithspringboot.util.SortUtil;
 import jakarta.transaction.Transactional;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,7 +30,15 @@ public class TodoService {
     }
 
     public List<Todo> findAll() {
-        return todoRepository.findAll(latest());
+        return todoRepository.findAll(SortUtil.oldest());
+    }
+
+    public List<Todo> findAllByIsCompleted(Boolean isCompleted) {
+        return todoRepository.findAllByIsCompletedOrderByCreatedAtAsc(isCompleted);
+    }
+
+    public List<Todo> findAllByIsStarred(Boolean isStarred) {
+        return todoRepository.findAllByIsStarredOrderByCreatedAtAsc(isStarred);
     }
 
     @Transactional
@@ -50,9 +58,5 @@ public class TodoService {
     @Transactional
     public void delete(Long id) {
         this.todoRepository.deleteById(id);
-    }
-
-    private Sort latest() {
-        return Sort.by(Sort.Direction.DESC, "createdAt");
     }
 }

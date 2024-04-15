@@ -6,26 +6,35 @@
     <div class="todo-area">
         <div class="row">
             <div class="col mb-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5>Total Todo</h5>
-                        <h5 th:text="${totalTodo}"></h5>
+                <div class="card border-primary">
+                    <h5 class="card-header border-primary">Total Todo</h5>
+                    <div class="card-body text-primary d-flex justify-content-between align-items-center">
+                        <h1 class="mb-0 d-inline" th:text="${totalTodo}"></h1>
+                        <a th:href="@{/todo}" class="float-end">
+                            <i class="fas fa-arrow-right fa-2x text-primary"></i>
+                        </a>
                     </div>
                 </div>
             </div>
             <div class="col mb-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5>Completed Todo</h5>
-                        <h5 th:text="${completedTodo}"></h5>
+                <div class="card border-success">
+                    <h5 class="card-header border-success">Completed Todo</h5>
+                    <div class="card-body text-success d-flex justify-content-between align-items-center">
+                        <h1 class="mb-0" th:text="${completedTodo}"></h1>
+                        <a th:href="@{/todo?completed=true}" class="float-end">
+                            <i class="fas fa-arrow-right fa-2x text-success"></i>
+                        </a>
                     </div>
                 </div>
             </div>
             <div class="col mb-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5>Starred Todo</h5>
-                        <h5 th:text="${starredTodo}"></h5>
+                <div class="card border-warning">
+                    <h5 class="card-header border-warning">Starred Todo</h5>
+                    <div class="card-body text-warning d-flex justify-content-between align-items-center">
+                        <h1 class="mb-0" th:text="${starredTodo}"></h1>
+                        <a th:href="@{/todo?starred=true}" class="float-end">
+                            <i class="fas fa-arrow-right fa-2x text-warning"></i>
+                        </a>
                     </div>
                 </div>
             </div>

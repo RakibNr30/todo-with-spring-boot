@@ -14,6 +14,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Slf4j
 @Controller
 @RequestMapping("/todo")
@@ -31,8 +34,23 @@ public class TodoController {
     }
 
     @GetMapping
-    public String index(Model model) {
-        model.addAttribute("todos", todoService.findAll());
+    public String index(
+            Model model,
+            @RequestParam(value = "completed", required = false, defaultValue = "false") Boolean completed,
+            @RequestParam(value = "starred", required = false, defaultValue = "false") Boolean starred
+    ) {
+
+        List<Todo> todos;
+
+        if (completed) {
+            todos = todoService.findAllByIsCompleted(true);
+        } else if (starred) {
+            todos = todoService.findAllByIsStarred(true);
+        } else {
+            todos = todoService.findAll();
+        }
+
+        model.addAttribute("todos", todos);
 
         return "front/todo/index";
     }
@@ -52,7 +70,7 @@ public class TodoController {
             new NotifierHelper(attributes).message("Todo added successfully.").success();
         } catch (Exception e) {
             log.error(e.getMessage());
-            new NotifierHelper(attributes).message("Todo could't be added.").error();
+            new NotifierHelper(attributes).message("Todo couldn't be added.").error();
         }
 
         return "redirect:/todo";
