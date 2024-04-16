@@ -6,7 +6,6 @@ import com.dsi.todowithspringboot.util.SortUtil;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,17 +19,17 @@ public class TodoService {
     }
 
     public Map<String, Long> findStatistics() {
-        Map<String, Long> statistics = new HashMap<>();
+        List<Todo> todos = todoRepository.findAll();
 
-        statistics.put("total", todoRepository.count());
-        statistics.put("completed", todoRepository.countByIsCompleted(true));
-        statistics.put("starred", todoRepository.countByIsStarred(true));
+        Long total = (long) todos.size();
+        Long completed = todos.stream().filter(Todo::getIsCompleted).count();
+        Long starred = todos.stream().filter(Todo::getIsStarred).count();
 
-        return statistics;
+        return Map.of("total", total, "completed", completed, "starred", starred);
     }
 
     public List<Todo> findAll() {
-        return todoRepository.findAll(SortUtil.oldest());
+        return todoRepository.findAll(SortUtil.latest());
     }
 
     public List<Todo> findAllByIsCompleted(Boolean isCompleted) {

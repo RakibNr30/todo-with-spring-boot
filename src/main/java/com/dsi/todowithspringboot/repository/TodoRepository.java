@@ -9,10 +9,6 @@ import java.util.List;
 
 @Repository
 public interface TodoRepository extends JpaRepository<Todo, Long> {
-    Long countByIsCompleted(Boolean isCompleted);
-
-    Long countByIsStarred(Boolean isStarred);
-
     List<Todo> findAllByIsCompletedOrderByCreatedAtAsc(Boolean isCompleted);
 
     List<Todo> findAllByIsStarredOrderByCreatedAtAsc(Boolean isStarred);
