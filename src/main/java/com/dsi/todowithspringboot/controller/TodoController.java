@@ -128,13 +128,15 @@ public class TodoController {
     }
 
     @PostMapping("/{id}/destroy")
-    public String destroy(@PathVariable("id") Long id, RedirectAttributes attributes) {
+    public String destroy(@PathVariable("id") Long id, RedirectAttributes attributes, HttpServletRequest request) {
 
         Todo todo = this.todoService.findById(id);
 
+        String redirect = "redirect:/todo?" + StringUtils.getQueryParams(request);
+
         if (todo == null) {
             new NotifierHelper(attributes).message("Todo not found.").error();
-            return "redirect:/todo";
+            return redirect;
         }
 
         try {
@@ -145,7 +147,7 @@ public class TodoController {
             new NotifierHelper(attributes).message("Todo can't be deleted.").error();
         }
 
-        return "redirect:/todo";
+        return redirect;
     }
 
     @PostMapping("/{id}/toggle-completed")

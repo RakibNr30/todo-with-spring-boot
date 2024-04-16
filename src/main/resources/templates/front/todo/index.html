@@ -30,7 +30,7 @@
                                        th:classappend="${todo.isStarred ? 'fas text-warning' : 'far'}"
                                        th:attr="onclick='handleToggle(' + '\'' + '/todo/' + ${todo.id} + '/toggle-starred' + '?' + ${queryParams} + '\'' + ')'"></i>
                                 </div>
-                                <form th:action="@{/todo/{id}/destroy(id=${todo.id})}" th:method="POST">
+                                <form th:action="@{'/todo/' + ${todo.id} + '/destroy'} + '?' + ${queryParams}" th:method="POST">
                                     <button class="btn btn-danger btn-sm text-light float-end">X</button>
                                 </form>
                             </div>
