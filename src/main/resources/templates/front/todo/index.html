@@ -24,11 +24,11 @@
                                 <div>
                                     <i class="fa-check-circle todo-toggle"
                                        th:classappend="${todo.isCompleted ? 'fas text-success' : 'far'}"
-                                       th:attr="onclick='handleToggle(' + '\'' + '/todo/' + ${todo.id} + '/toggle-completed' + '\'' + ')'"></i>
+                                       th:attr="onclick='handleToggle(' + '\'' + '/todo/' + ${todo.id} + '/toggle-completed' + '?' + ${queryParams} + '\'' + ')'"></i>
                                     <span class="text-dark">|</span>
                                     <i class="fa-star todo-toggle"
                                        th:classappend="${todo.isStarred ? 'fas text-warning' : 'far'}"
-                                       th:attr="onclick='handleToggle(' + '\'' + '/todo/' + ${todo.id} + '/toggle-starred' + '\'' + ')'"></i>
+                                       th:attr="onclick='handleToggle(' + '\'' + '/todo/' + ${todo.id} + '/toggle-starred' + '?' + ${queryParams} + '\'' + ')'"></i>
                                 </div>
                                 <form th:action="@{/todo/{id}/destroy(id=${todo.id})}" th:method="POST">
                                     <button class="btn btn-danger btn-sm text-light float-end">X</button>

@@ -6,6 +6,8 @@ import com.dsi.todowithspringboot.entity.Todo;
 import com.dsi.todowithspringboot.helper.NotifierHelper;
 import com.dsi.todowithspringboot.helper.ValidationHelper;
 import com.dsi.todowithspringboot.service.TodoService;
+import com.dsi.todowithspringboot.util.StringUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -36,7 +38,8 @@ public class TodoController {
     public String index(
             Model model,
             @RequestParam(value = "completed", required = false, defaultValue = "false") Boolean completed,
-            @RequestParam(value = "starred", required = false, defaultValue = "false") Boolean starred
+            @RequestParam(value = "starred", required = false, defaultValue = "false") Boolean starred,
+            HttpServletRequest request
     ) {
 
         List<Todo> todos;
@@ -50,6 +53,7 @@ public class TodoController {
         }
 
         model.addAttribute("todos", todos);
+        model.addAttribute("queryParams", StringUtils.getQueryParams(request));
 
         return "front/todo/index";
     }
@@ -91,7 +95,7 @@ public class TodoController {
     }
 
     @PostMapping("/{id}/update")
-    public String update(@PathVariable Long id, @Valid @ModelAttribute TodoUpdateDto todoUpdateDto, BindingResult result, RedirectAttributes attributes, Model model) {
+    public String update(@PathVariable Long id, @Valid @ModelAttribute TodoUpdateDto todoUpdateDto, BindingResult result, RedirectAttributes attributes) {
 
         if (result.hasErrors()) {
             new ValidationHelper(attributes).model("todo", todoUpdateDto).bind(result);
@@ -145,13 +149,15 @@ public class TodoController {
     }
 
     @PostMapping("/{id}/toggle-completed")
-    public String toggleCompleted(@PathVariable Long id, RedirectAttributes attributes) {
+    public String toggleCompleted(@PathVariable Long id, RedirectAttributes attributes, HttpServletRequest request) {
 
         Todo todo = this.todoService.findById(id);
 
+        String redirect = "redirect:/todo?" + StringUtils.getQueryParams(request);
+
         if (todo == null) {
             new NotifierHelper(attributes).message("Todo not found.").error();
-            return "redirect:/todo";
+            return redirect;
         }
 
         try {
@@ -162,17 +168,19 @@ public class TodoController {
             new NotifierHelper(attributes).message("Todo can't be updated.").error();
         }
 
-        return "redirect:/todo";
+        return redirect;
     }
 
     @PostMapping("/{id}/toggle-starred")
-    public String toggleStarred(@PathVariable Long id, RedirectAttributes attributes) {
+    public String toggleStarred(@PathVariable Long id, RedirectAttributes attributes, HttpServletRequest request) {
 
         Todo todo = this.todoService.findById(id);
 
+        String redirect = "redirect:/todo?" + StringUtils.getQueryParams(request);
+
         if (todo == null) {
             new NotifierHelper(attributes).message("Todo not found.").error();
-            return "redirect:/todo";
+            return redirect;
         }
 
         try {
@@ -183,6 +191,6 @@ public class TodoController {
             new NotifierHelper(attributes).message("Todo can't be updated.").error();
         }
 
-        return "redirect:/todo";
+        return redirect;
     }
 }

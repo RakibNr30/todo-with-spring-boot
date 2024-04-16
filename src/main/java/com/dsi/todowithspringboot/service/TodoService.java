@@ -2,7 +2,7 @@ package com.dsi.todowithspringboot.service;
 
 import com.dsi.todowithspringboot.entity.Todo;
 import com.dsi.todowithspringboot.repository.TodoRepository;
-import com.dsi.todowithspringboot.util.SortUtil;
+import com.dsi.todowithspringboot.util.SortUtils;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +29,7 @@ public class TodoService {
     }
 
     public List<Todo> findAll() {
-        return todoRepository.findAll(SortUtil.latest());
+        return todoRepository.findAll(SortUtils.latest());
     }
 
     public List<Todo> findAllByIsCompleted(Boolean isCompleted) {
