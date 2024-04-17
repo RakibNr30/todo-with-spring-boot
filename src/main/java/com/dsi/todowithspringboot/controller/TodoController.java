@@ -5,9 +5,11 @@ import com.dsi.todowithspringboot.dto.TodoUpdateDto;
 import com.dsi.todowithspringboot.entity.Todo;
 import com.dsi.todowithspringboot.helper.NotifierHelper;
 import com.dsi.todowithspringboot.helper.ValidationHelper;
+import com.dsi.todowithspringboot.service.ReportService;
 import com.dsi.todowithspringboot.service.TodoService;
 import com.dsi.todowithspringboot.util.StringUtils;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -24,9 +26,11 @@ import java.util.List;
 public class TodoController {
 
     private final TodoService todoService;
+    private final ReportService reportService;
 
-    public TodoController(TodoService todoService) {
+    public TodoController(TodoService todoService, ReportService reportService) {
         this.todoService = todoService;
+        this.reportService = reportService;
     }
 
     @ModelAttribute
@@ -194,5 +198,17 @@ public class TodoController {
         }
 
         return redirect;
+    }
+
+    @GetMapping("/report/{format}")
+    @ResponseBody
+    public String report(@PathVariable String format, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            this.reportService.exportTodoList(format, response);
+            return "Success";
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return e.getMessage();
+        }
     }
 }

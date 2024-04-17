@@ -7,12 +7,17 @@
     <div class="todo-area container">
         <form th:action="@{/todo/store}" th:object="${todo}" method="POST">
             <div class="row">
-                <div class="col-12 mb-3">
+                <div class="col-sm-8 mb-3">
                     <div class="input-group">
                         <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
                         <input id="title" th:field="*{title}" class="form-control" th:classappend="${#fields.hasErrors('title') ? 'is-invalid' : ''}" type="text" placeholder="Enter todo">
                         <button class="btn btn-primary">Add New</button>
                     </div>
+                </div>
+                <div class="col-sm-4 mb-3">
+                    <a th:href="@{/todo/report/pdf}" class="btn btn-outline-primary float-end" target="_blank">
+                        <i class="fas fa-file-pdf me-1"></i> PDF
+                    </a>
                 </div>
             </div>
         </form>
