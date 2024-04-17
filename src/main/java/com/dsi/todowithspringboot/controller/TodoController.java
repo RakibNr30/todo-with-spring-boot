@@ -1,5 +1,7 @@
 package com.dsi.todowithspringboot.controller;
 
+import com.dsi.todowithspringboot.constants.ContentDispositionType;
+import com.dsi.todowithspringboot.constants.ExportType;
 import com.dsi.todowithspringboot.dto.TodoStoreDto;
 import com.dsi.todowithspringboot.dto.TodoUpdateDto;
 import com.dsi.todowithspringboot.entity.Todo;
@@ -200,15 +202,13 @@ public class TodoController {
         return redirect;
     }
 
-    @GetMapping("/report/{format}")
+    @GetMapping("/report/{exportType}")
     @ResponseBody
-    public String report(@PathVariable String format, HttpServletRequest request, HttpServletResponse response) {
+    public void report(@PathVariable ExportType exportType, HttpServletRequest request, HttpServletResponse response) {
         try {
-            this.reportService.exportTodoList(format, response);
-            return "Success";
+            this.reportService.exportTodoList(exportType, request, response);
         } catch (Exception e) {
             log.error(e.getMessage());
-            return e.getMessage();
         }
     }
 }
